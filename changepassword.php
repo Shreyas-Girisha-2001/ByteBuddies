@@ -21,8 +21,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 		    </script>";
 	}
 	if($SecQNA['question1']===$secq1 && $SecQNA['question2']===$secq2 && $SecQNA['answer1']===$seca1 && $SecQNA['answer2']===$seca2){
-	$result=changepassword($username,$password);
-	echo $result;
+		$result=changepassword($username,$password);
+		echo $result;
 	}else{
 		echo "<script type='text/javascript'>
 		    alert('Security questions and answers mismatched, Change password operation failed');
