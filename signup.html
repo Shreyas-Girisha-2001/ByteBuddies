@@ -4,23 +4,98 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up - ByteBuddies</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script>
+        function togglePasswordVisibility() {
+            var passwordField1 = document.getElementById("password"); 
+            var passwordField2 = document.getElementById("cpassword");
+            if (passwordField1.type === "password") {
+                passwordField1.type = "text"; 
+                passwordField2.type = "text"; 
+            } 
+            else {
+                passwordField1.type = "password"; 
+                passwordField2.type = "password";
+            }
+        } 
+        document.addEventListener("DOMContentLoaded", function() {
+            var textFields = document.querySelectorAll('.textfield.small');
+
+            textFields.forEach(function(textField) {
+                textField.addEventListener('focus', function() {
+                    this.classList.remove('small');
+                    this.classList.add('large');
+                });
+
+                textField.addEventListener('blur', function() {
+                    if (this.value === '') {
+                        this.classList.remove('large');
+                        this.classList.add('small');
+                    }
+                });
+            });
+        });
+    </script> 
 </head>
 <body>
     <div class="container">
         <div class="content">
             <h1>Sign Up</h1>
-            <form method="post" action="PHP_files/signup.php">
-                <input type="text" id="username" name="username" placeholder="Username" required>
-                <input type="email" id="email" name="email" placeholder="Email" required>
-                <input type="password" id="password" name="password" placeholder="Password" required>
-                <input type="password" id="cpassword" name="cpassword" placeholder="Confirm Password" required>
+            <form method="post" action="addnewuser.php">
+                <input class="textform" type="text" id="firstname" name="firstname" placeholder="First Name" required><br><br>
+                <input class="textform" type="text" id="middlename" name="middlename" placeholder="Middle Name"><br><br>
+                <input class="textform" type="text" id="lastname" name="lastname" placeholder="Last Name" required><br><br>
+                <input class="textform" type="text" id="username" name="username" placeholder="Username" required><br><br>
+                <input class="textform" type="email" id="email" name="email" placeholder="Email" required 
+                pattern=" ^[\w.-]+@[\w-]+(.[\w-]+)*$" 
+                title="Please enter valid email" 
+                onchange="this.setCustomValidity(this.validity.patternMismatch?this.title: '');"><br><br>
+                <input class="textform" type="password" id="password" name="password" placeholder="Password" required 
+                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&])[\w!@#$%^&]{8,}$"
+                title="Password must have at least 8 characters with 1 special symbol !@#$%^& 1 number, 1 lowercase, and 1
+UPPERCASE"
+                onchange="this.setCustomValidity(this.validity.patternMismatch?this.title: ''); form.repassword.pattern = this.value;"><br><br>
+                <input class="textform" type="password" id="cpassword" name="cpassword" placeholder="Confirm Password" required
+                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&])[\w!@#$%^&]{8,}$"
+                title="Password must have at least 8 characters with 1 special symbol !@#$%^& 1 number, 1 lowercase, and 1
+UPPERCASE"
+                onchange="this.setCustomValidity(this.validity.patternMismatch?this.title: ''); form.repassword.pattern = this.value;"><br><br>
+                <input type="checkbox" onclick="togglePasswordVisibility()"> <label class="showpassword">Show Password</label> <br><br>
+                <textarea class="textfield small" type="text" id="bio" name="bio" placeholder="Enter A Catchy Bio" rows="2" required></textarea><br><br>
+                
+                <div class="nameflex">
+		    <div class="dropdown">
+			<p class="lbl">Security Question 1:</p>
+			<select class="item5 textform" name="securityquestion1" id="securityquestion1" required>
+			    <option value="" selected disabled hidden>Choose here</option>
+			    <option value="What is your mother's maiden name?">What is your mother's maiden name?</option>
+			    <option value="What is the name of your first pet?">What is the name of your first pet?</option>
+			    <option value="What city were you born in?">What city were you born in?</option>
+			    <option value="What is your favorite movie?">What is your favorite movie?</option>
+			    <option value="What is the name of your favorite teacher?">What is the name of your favorite teacher?</option>
+			</select><br>
+			<input class="textform" type="text" id="securityanswer1" name="securityanswer1" placeholder="Enter Answer for Security Question 1" required><br>
+		    </div>
+		    <div class="dropdown">
+			<p class="lbl">Security Question 2:</p>
+			<select class="item5 textform" name="securityquestion2" id="securityquestion2" required>
+			    <option value="" selected disabled hidden>Choose here</option>
+			    <option value="What is your mother's maiden name?">What is your mother's maiden name?</option>
+			    <option value="What is the name of your first pet?">What is the name of your first pet?</option>
+			    <option value="What city were you born in?">What city were you born in?</option>
+			    <option value="What is your favorite movie?">What is your favorite movie?</option>
+			    <option value="What is the name of your favorite teacher?">What is the name of your favorite teacher?</option>
+			</select><br>
+			<input class="textform" type="text" id="securityanswer2" name="securityanswer2" placeholder="Enter Answer for Security Question 2" required><br>
+		    </div>
+		</div>
+
                 <button type="submit"><span>Sign Up</span></button>
             </form>
             <p>Already have an account? <a href="login.html">Sign In</a></p>
         </div>
     </div>
-    <script src="script.js"></script>
 </body>
 </html>
+
