@@ -5,7 +5,7 @@ session_start(); // is used to start or resume a session// The session_start() f
 // Destroy the session to log out the user
 
 session_destroy();
-echo '<p> You have logged out. You may log in again.</p>';
-echo '<a href="loginform.php">Login again</a>';
+echo "<script>alert('You have been logged out');</script>";
+header("Location: url=index.html");
 exit; // same as exit(); used to terminate the execution of the script
 ?>

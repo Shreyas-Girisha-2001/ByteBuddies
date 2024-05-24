@@ -63,6 +63,11 @@ function getGreeting() {
           <button>
             <span>Contact Superuser</span>
           </button>
+        </a><br>
+        <a href="logout.php">
+          <button>
+            <span>Logout</span>
+          </button>
         </a>
         </center>
       </div>
