@@ -25,28 +25,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST["username"];
     $password = $_POST["password"];
 
-    // Check login credentials
-    if (securechecklogin($username, $password)) {
-        // Assuming $username holds the username value
-        // Check user role
-        $role = getUserRole($username);
-        if ($role === 0) {
-            $_SESSION['username'] = $username;
-            header("Location: normaluserpage.php"); // Redirect to normal user page
-            exit();
-        } else if ($role === 1) {
-            $_SESSION['username'] = $username;
-            header("Location: superuserpage.php"); // Redirect to superuser page
-            exit();
+    if(usernameExists($username)===true){
+        // Check login credentials
+        if (securechecklogin($username, $password)) {
+            // Assuming $username holds the username value
+            // Check user role
+            $role = getUserRole($username);
+            if ($role === 0) {
+                $_SESSION['username'] = $username;
+                header("Location: normaluserpage.php"); // Redirect to normal user page
+                exit();
+            } else if ($role === 1) {
+                $_SESSION['username'] = $username;
+                header("Location: superuserpage.php"); // Redirect to superuser page
+                exit();
+            } else {
+                echo "<script type='text/javascript'>
+                alert('Something went wrong! Try contacting the developers about your issue.');
+                window.history.back();
+                </script>";
+            }
         } else {
-            echo "<script type='text/javascript'>
-            alert('Something went wrong! Try contacting the developers about your issue.');
-            window.history.back();
-            </script>";
+            loginFailed();
         }
-    } else {
-        loginFailed();
+	} else {
+        echo "<script type='text/javascript'>
+		    alert('username not found');
+		    </script>";
+		header("Refresh:0; url=loginform.php");
+		die();
     }
+    
 }
 
 $conn->close();

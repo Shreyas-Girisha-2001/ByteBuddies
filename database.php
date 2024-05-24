@@ -22,20 +22,6 @@ function adduser($firstname, $middlename, $lastname, $username, $email, $passwor
     $stmt->bind_result($count);
     $stmt->fetch();
     $stmt->close();
-
-    if ($count > 0) {
-        if (usernameExists($username)) {
-            // Username is already in use
-            echo "<script>alert('Username is already in use.');</script>";
-            header("Refresh:0; url=registrationform.php");
-            die();
-        } elseif (emailExists($email)) {
-            // Email is already in use
-            echo "<script>alert('Email is already in use.');</script>";
-            header("Refresh:0; url=registrationform.php");
-            die();
-        }
-    }
     
     // Define the SQL query with placeholders
     if (empty($middlename)) {
@@ -49,7 +35,7 @@ function adduser($firstname, $middlename, $lastname, $username, $email, $passwor
 
     // Bind parameters
     if (empty($middlename)) {
-        $stmt->bind_param("sssssssiissss", $firstname, $lastname, $username, $email, $passwordHash, $registeredAt, $bio, $restricted, $superuser, $securityQuestion1, $securityAnswer1, $securityQuestion2, $securityAnswer2);
+        $stmt->bind_param("sssssssiissss", $firstname, $lastname, $username, $email, $passwordHash, $registeredAt, $bio, $restricted, $superuser, $securityQuestion1, $securityAnswer1, $securityQuestion2,$securityAnswer2);
     } else {
         $stmt->bind_param("ssssssssiissss", $firstname, $middlename, $lastname, $username, $email, $passwordHash, $registeredAt, $bio, $restricted, $superuser, $securityQuestion1, $securityAnswer1, $securityQuestion2, $securityAnswer2);
     }
@@ -60,7 +46,6 @@ function adduser($firstname, $middlename, $lastname, $username, $email, $passwor
     } else {
         return false;
     }
-
     // Close the statement
     $stmt->close();
 }
@@ -96,6 +81,15 @@ function changepassword($username, $newpassword) {
 	// Using prepared statement to prevent SQL injection
 	$stmt = $conn->prepare("UPDATE user SET passwordHash=md5(?) WHERE username=?;");
 	$stmt->bind_param("ss", $newpassword, $username);
+	$flag = $stmt->execute();
+	$conn->close();
+	return $flag;
+}
+
+function deleteUser($username){
+    global $conn;
+    $stmt = $conn->prepare("DELETE from user where username = ?");
+    $stmt->bind_param("s",$username);
 	$flag = $stmt->execute();
 	$conn->close();
 	return $flag;
@@ -153,4 +147,5 @@ function getResetPassInfo($username) {
     }
     return null;
 }
+
 ?>

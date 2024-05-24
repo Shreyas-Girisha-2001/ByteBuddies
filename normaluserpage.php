@@ -54,7 +54,7 @@ function getGreeting() {
             <span>Change Password</span>
           </button>
         </a><br>
-        <a href="#">
+        <a href="deleteuser.php">
           <button>
             <span>Delete Account</span>
           </button>
