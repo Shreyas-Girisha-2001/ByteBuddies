@@ -6,6 +6,6 @@ session_start(); // is used to start or resume a session// The session_start() f
 
 session_destroy();
 echo "<script>alert('You have been logged out');</script>";
-header("Location: url=index.html");
+header("Location: index.html");
 exit; // same as exit(); used to terminate the execution of the script
 ?>
